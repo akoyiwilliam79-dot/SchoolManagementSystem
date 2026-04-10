@@ -1,0 +1,21 @@
+<!-- fees.html -->
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<h1>Fees Management</h1>
+<button>Record Payment</button>
+<table>
+    <tr>
+        <th>Student</th>
+        <th>Amount Paid</th>
+        <th>Balance</th>
+    </tr>
+   {% for fee in fees %}
+<tr>
+    <td>{{ fee.student }}</td>
+    <td>{{ fee.amount_paid }}</td>
+    <td>{{ fee.balance }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

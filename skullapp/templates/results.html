@@ -1,0 +1,21 @@
+<!-- results.html -->
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<h1>Results Management</h1>
+<button>Add Results</button>
+<table>
+    <tr>
+        <th>Student</th>
+        <th>Subject</th>
+        <th>Score</th>
+    </tr>
+    {% for result in results %}
+<tr>
+    <td>{{ result.student }}</td>
+    <td>{{ result.subject }}</td>
+    <td>{{ result.score }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

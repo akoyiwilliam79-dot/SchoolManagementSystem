@@ -1,0 +1,36 @@
+
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ST Lwenya School System</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    
+
+<div class="sidebar">
+    <h2>ST LWENYA</h2>
+    <ul>
+        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'students' %}">Students</a></li>
+        <li><a href="{% url 'add_student' %}">
+    <button>Add Student</button>
+</a></li>
+        <li><a href="{% url 'teachers' %}">Teachers</a></li>
+        <li><a href="{% url 'fees' %}">Fees</a></li>
+        <li><a href="{% url 'attendance' %}">Attendance</a></li>
+        <li><a href="{% url 'results' %}">Results</a></li>
+    </ul>
+</div>
+
+    <div class="content">
+        {% block content %}
+        
+        {% endblock %}
+    </div>
+
+</body>
+</html>

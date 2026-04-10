@@ -1,0 +1,22 @@
+<!-- teachers.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>Teachers & Staff</h1>
+<button>Add Teacher</button>
+<table>
+    <tr>
+        
+        <th>Name</th>
+        <th>Subject</th>
+        <th>Phone</th>
+    </tr>
+   {% for teacher in teachers %}
+<tr>
+    <td>{{ teacher.name }}</td>
+    <td>{{ teacher.subject }}</td>
+    <td>{{ teacher.phone }}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

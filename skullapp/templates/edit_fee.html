@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Edit Fee</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Student</label><br>
+    <select name="student">
+        {% for student in students %}
+            <option value="{{ student.id }}" {% if student.id == fee.student.id %}selected{% endif %}>
+                {{ student.first_name }} {{ student.last_name }}
+            </option>
+        {% endfor %}
+    </select><br><br>
+
+    <input type="number" name="amount_paid" value="{{ fee.amount_paid }}"><br><br>
+    <input type="number" name="total_fee" value="{{ fee.total_fee }}"><br><br>
+
+    <button type="submit">Update</button>
+</form>
+
+{% endblock %}

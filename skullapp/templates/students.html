@@ -1,25 +1,51 @@
-<!-- students.html -->
 {% extends 'base.html' %}
-{% load static%}
+
 {% block content %}
-<h1>Students Management</h1>
-<button>Add Student</button>
+
+<h1>Students & Academic Record</h1>
+
 <table>
-    <tr>
-        <th>ID</th>
+    <tr style="background-color: {% if item.color %}{{ item.color }}20{% endif %};">
         <th>Name</th>
-        <th>Class</th>
-        <th>Actions</th>
+        <th>English</th>
+        <th>Kiswahili</th>
+        <th>Maths</th>
+        <th>Science</th>
+        <th>Social</th>
+        <th>CRE</th>
+        <th>Computer</th>
+        <th>Business</th>
+        <th>Agriculture</th>
+        <th>Total</th>
     </tr>
-   <tbody>
-{% for student in students %}
-<tr>
-    <td>{{ student.admission_number }}</td>
-    <td>{{ student.first_name }} {{ student.last_name }}</td>
-    <td>{{ student.student_class }}</td>
-    <td>Edit | Delete</td>
-</tr>
-{% endfor %}
-</tbody>
+
+    {% for item in student_data %}
+    <tr style="background-color: {% if item.color %}{{ item.color }}20{% endif %};">
+        <td>
+            {{ item.student.first_name }} {{ item.student.last_name }}
+        </td>
+
+        <td>{{ item.result.english|default:"-" }}</td>
+        <td>{{ item.result.kiswahili|default:"-" }}</td>
+        <td>{{ item.result.maths|default:"-" }}</td>
+        <td>{{ item.result.science|default:"-" }}</td>
+        <td>{{ item.result.social_studies|default:"-" }}</td>
+        <td>{{ item.result.cre|default:"-" }}</td>
+        <td>{{ item.result.computer|default:"-" }}</td>
+        <td>{{ item.result.business|default:"-" }}</td>
+        <td>{{ item.result.agriculture|default:"-" }}</td>
+
+        <td>
+    {% if item.result %}
+        <b style="color: {{ item.color }};">
+            {{ item.result.total }} ({{ item.grade }})
+        </b>
+    {% else %}
+        -
+    {% endif %}
+</td>
+    </tr>
+    {% endfor %}
 </table>
+
 {% endblock %}

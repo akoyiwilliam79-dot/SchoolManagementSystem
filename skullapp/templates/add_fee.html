@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Add Fee</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Student</label><br>
+    <select name="student">
+        {% for student in students %}
+            <option value="{{ student.id }}">
+                {{ student.first_name }} {{ student.last_name }}
+            </option>
+        {% endfor %}
+    </select><br><br>
+
+    <input type="number" name="amount_paid" placeholder="Amount Paid"><br><br>
+    <input type="number" name="total_fee" placeholder="Total Fee"><br><br>
+
+    <button type="submit">Save Fee</button>
+</form>
+
+{% endblock %}

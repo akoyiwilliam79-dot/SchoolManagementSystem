@@ -1,21 +1,50 @@
 <!-- results.html -->
 {% extends 'base.html' %}
-{% load static%}
+
 {% block content %}
+
 <h1>Results Management</h1>
-<button>Add Results</button>
+
+<a href="{% url 'add_result' %}">
+    <button>Add Result</button>
+</a>
+
 <table>
     <tr>
         <th>Student</th>
-        <th>Subject</th>
-        <th>Score</th>
+        <th>English</th>
+        <th>Kiswahili</th>
+        <th>Maths</th>
+        <th>Science</th>
+        <th>Social</th>
+        <th>CRE</th>
+        <th>Computer</th>
+        <th>Business</th>
+        <th>Agriculture</th>
+        <th>Total</th>
+        <th>Actions</th>
     </tr>
-    {% for result in results %}
-<tr>
-    <td>{{ result.student }}</td>
-    <td>{{ result.subject }}</td>
-    <td>{{ result.score }}</td>
-</tr>
-{% endfor %}
+
+    {% for r in results %}
+    <tr>
+        <td>{{ r.student.first_name }} {{ r.student.last_name }}</td>
+        <td>{{ r.english }}</td>
+        <td>{{ r.kiswahili }}</td>
+        <td>{{ r.maths }}</td>
+        <td>{{ r.science }}</td>
+        <td>{{ r.social_studies }}</td>
+        <td>{{ r.cre }}</td>
+        <td>{{ r.computer }}</td>
+        <td>{{ r.business }}</td>
+        <td>{{ r.agriculture }}</td>
+        <td><strong>{{ r.total }}</strong></td>
+        <td>
+            <a href="{% url 'edit_result' r.id %}"><button>Edit</button></a><br>
+            <br>
+            <a href="{% url 'delete_result' r.id %}"><button style="background:red;">Delete</button></a>
+        </td>
+    </tr>
+    {% endfor %}
 </table>
+
 {% endblock %}

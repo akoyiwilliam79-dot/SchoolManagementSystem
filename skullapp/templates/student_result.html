@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>My Results</h1>
+
+<table>
+    <tr>
+        <th>English</th>
+        <th>Kiswahili</th>
+        <th>Maths</th>
+        <th>Science</th>
+        <th>Social</th>
+        <th>CRE</th>
+        <th>Computer</th>
+        <th>Business</th>
+        <th>Agriculture</th>
+        <th>Total</th>
+    </tr>
+
+    {% for r in results %}
+    <tr>
+        <td>{{ r.english }}</td>
+        <td>{{ r.kiswahili }}</td>
+        <td>{{ r.maths }}</td>
+        <td>{{ r.science }}</td>
+        <td>{{ r.social_studies }}</td>
+        <td>{{ r.cre }}</td>
+        <td>{{ r.computer }}</td>
+        <td>{{ r.business }}</td>
+        <td>{{ r.agriculture }}</td>
+        <td><b>{{ r.total }}</b></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

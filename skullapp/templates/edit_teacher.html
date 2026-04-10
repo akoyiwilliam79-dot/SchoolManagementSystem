@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Edit Teacher</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="subject1" placeholder="Subject 1">
+    <input type="text" name="subject2" placeholder="Subject 2">
+    <input type="text" name="subject3" placeholder="Subject 3">
+
+    <button type="submit">Update</button>
+</form>
+
+{% endblock %}

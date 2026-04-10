@@ -1,22 +1,38 @@
-<!-- teachers.html -->
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
 <h1>Teachers & Staff</h1>
-<button>Add Teacher</button>
+
 <table>
     <tr>
-        
         <th>Name</th>
-        <th>Subject</th>
+        <th>Subject 1</th>
+        <th>Subject 2</th>
+        <th>Subject 3</th>
         <th>Phone</th>
+        <th>Actions</th>
     </tr>
-   {% for teacher in teachers %}
-<tr>
-    <td>{{ teacher.name }}</td>
-    <td>{{ teacher.subject }}</td>
-    <td>{{ teacher.phone }}</td>
-</tr>
-{% endfor %}
+
+    {% for teacher in teachers %}
+    <tr>
+        <td>{{ teacher.name }}</td>
+        <td>{{ teacher.subject1 }}</td>
+        <td>{{ teacher.subject2 }}</td>
+        <td>{{ teacher.subject3 }}</td>
+        <td>{{ teacher.phone }}</td>
+
+        <td>
+            <a href="{% url 'edit_teacher' teacher.id %}">
+                <button>Edit</button>
+            </a>
+
+            <a href="{% url 'delete_teacher' teacher.id %}">
+                <button style="background:red;">Delete</button>
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
 </table>
+
 {% endblock %}

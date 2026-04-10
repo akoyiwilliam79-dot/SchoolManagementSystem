@@ -1,17 +1,51 @@
-<!-- attendance.html -->
 {% extends 'base.html' %}
-{% load static%}
+
 {% block content %}
+
 <h1>Attendance</h1>
-<button>Mark Attendance</button>
+
+<!-- FORM -->
+<form method="POST" action="{% url 'mark_attendance' %}">
+    {% csrf_token %}
+
+    <label>Student</label>
+    <select name="student" required>
+        {% for student in students %}
+            <option value="{{ student.id }}">
+                {{ student.first_name }} {{ student.last_name }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <label>Date</label>
+    <input type="date" name="date" required>
+
+    <label>Status</label>
+    <select name="status">
+        <option value="Present">Present</option>
+        <option value="Absent">Absent</option>
+    </select>
+
+    <button type="submit">Mark Attendance</button>
+</form>
+
+<hr>
+
+<!-- TABLE -->
 <table>
     <tr>
         <th>Student</th>
+        <th>Date</th>
         <th>Status</th>
     </tr>
+
+    {% for a in attendance %}
     <tr>
-        <td>John Doe</td>
-        <td>Present</td>
+        <td>{{ a.student.first_name }} {{ a.student.last_name }}</td>
+        <td>{{ a.date }}</td>
+        <td>{{ a.status }}</td>
     </tr>
+    {% endfor %}
 </table>
+
 {% endblock %}

@@ -1,108 +1,307 @@
-/* RESET */
+/* =========================
+   GLOBAL RESET
+========================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-/* BODY */
+/* =========================
+   BODY LAYOUT
+========================= */
 body {
     display: flex;
-    font-family: Arial, sans-serif;
-    background: #eef2f7;
-    color: #111;
+    background: #f5f7fb;
+    color: #1f2937;
+    transition: 0.3s;
 }
 
-/* SIDEBAR */
+/* =========================
+   DARK MODE
+========================= */
+body.dark {
+    background: #0f172a;
+    color: #e5e7eb;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
 .sidebar {
-    width: 240px;
+    width: 260px;
     min-height: 100vh;
-    background: #1f2a40;
+    background: linear-gradient(180deg, #0f172a, #1e3a8a);
     color: white;
-    padding: 20px;
+    padding: 25px;
+    box-shadow: 5px 0 20px rgba(0,0,0,0.15);
 }
 
 .sidebar h2 {
-    margin-bottom: 20px;
     text-align: center;
+    margin-bottom: 25px;
     font-size: 22px;
+    letter-spacing: 1px;
 }
 
+/* MENU LIST */
 .sidebar ul {
     list-style: none;
 }
 
+/* MENU ITEMS */
 .sidebar li {
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
+/* LINKS */
 .sidebar a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
     color: white;
     text-decoration: none;
-    display: block;
-    padding: 10px;
-    border-radius: 8px;
+    transition: 0.3s;
+    font-size: 15px;
 }
 
+/* HOVER EFFECT */
 .sidebar a:hover {
-    background: #2f3e5e;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(5px);
 }
 
-/* CONTENT AREA */
+/* BUTTON INSIDE SIDEBAR (ADD STUDENT LOOKS BAD FIX) */
+.sidebar button {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.sidebar button:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+}
+
+/* =========================
+   CONTENT AREA
+========================= */
 .content {
     flex: 1;
     padding: 30px;
+    animation: fadeIn 0.4s ease-in;
 }
 
-/* HEADINGS */
+/* FADE EFFECT */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================
+   HEADINGS
+========================= */
 h1 {
+    font-size: 28px;
     margin-bottom: 20px;
-    color: #111;
 }
 
-/* BUTTONS */
-button {
-    background: #3498db;
+h2, h3 {
+    margin-bottom: 10px;
+}
+
+/* =========================
+   DASHBOARD CARDS
+========================= */
+.card {
+    background: white;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    display: inline-block;
+    min-width: 200px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* DARK MODE CARDS */
+body.dark .card {
+    background: #1e293b;
     color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-bottom: 15px;
 }
 
-button:hover {
-    background: #217dbb;
-}
-
-/* TABLE */
+/* =========================
+   TABLES (VERY IMPORTANT)
+========================= */
 table {
     width: 100%;
     border-collapse: collapse;
     background: white;
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    margin-top: 15px;
 }
 
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-}
-
-th {
-    background: #2c3e50;
+body.dark table {
+    background: #1e293b;
     color: white;
 }
 
-/* CARDS (dashboard use) */
-.card {
+th {
+    background: #1e3a8a;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+    background: #f1f5f9;
+}
+
+/* =========================
+   BUTTONS (GLOBAL)
+========================= */
+button {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #1d4ed8;
+    transform: scale(1.05);
+}
+
+/* =========================
+   INPUTS & FORMS
+========================= */
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 5px rgba(37,99,235,0.3);
+}
+
+form {
     background: white;
     padding: 20px;
-    margin: 10px 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    display: inline-block;
-    min-width: 200px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    max-width: 600px;
+}
+
+body.dark form {
+    background: #1e293b;
+}
+
+/* =========================
+   LINKS (GENERAL)
+========================= */
+a {
+    text-decoration: none;
+}
+
+/* =========================
+   RESPONSIVE (MOBILE)
+========================= */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .card {
+        display: block;
+        width: 100%;
+    }
+}
+
+
+
+.marks-container {
+    display: flex;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    gap: 20px;
+}
+
+/* LEFT SIDE */
+.subjects {
+    width: 40%;
+}
+
+.subjects p {
+    padding: 10px;
+    margin: 5px 0;
+    background: #f1f5f9;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* VERTICAL LINE */
+.divider {
+    width: 2px;
+    background: #cbd5e1;
+}
+
+/* RIGHT SIDE */
+.marks {
+    width: 60%;
+}
+
+.marks input {
+    display: block;
+    margin: 8px 0;
+}
+
+input::placeholder {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* SAFE INPUT DISPLAY FIX */
+form input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    opacity: 1;
+    visibility: visible;
+}
+label {
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
 }

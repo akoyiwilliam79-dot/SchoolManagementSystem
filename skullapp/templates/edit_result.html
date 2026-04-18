@@ -4,46 +4,62 @@
 
 <h1>Edit Results</h1>
 
-<div class="marks-container">
+<form method="POST">
+    {% csrf_token %}
 
-    <div class="subjects">
-        <h3>Subjects</h3>
-        <p>English</p>
-        <p>Kiswahili</p>
-        <p>Maths</p>
-        <p>Science</p>
-        <p>Social Studies</p>
-        <p>CRE</p>
-        <p>Computer</p>
-        <p>Business</p>
-        <p>Agriculture</p>
+    <div class="marks-container">
+
+        <div class="subjects">
+            <h3>Subjects</h3>
+            <p>English</p>
+            <p>Kiswahili</p>
+            <p>Maths</p>
+            <p>Science</p>
+            <p>Social Studies</p>
+            <p>CRE</p>
+            <p>Computer</p>
+            <p>Business</p>
+            <p>Agriculture</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="marks">
+            <h3>Marks</h3>
+
+            <label>English</label>
+            <input type="number" name="english" value="{{ result.english }}"><br><br>
+
+            <label>Kiswahili</label>
+            <input type="number" name="kiswahili" value="{{ result.kiswahili }}"><br><br>
+
+            <label>Maths</label>
+            <input type="number" name="maths" value="{{ result.maths }}"><br><br>
+
+            <label>Science</label>
+            <input type="number" name="science" value="{{ result.science }}"><br><br>
+
+            <label>Social Studies</label>
+            <input type="number" name="social_studies" value="{{ result.social_studies }}"><br><br>
+
+            <label>C.R.E</label>
+            <input type="number" name="cre" value="{{ result.cre }}"><br><br>
+
+            <label>Computer</label>
+            <input type="number" name="computer" value="{{ result.computer }}"><br><br>
+
+            <label>Business</label>
+            <input type="number" name="business" value="{{ result.business }}"><br><br>
+
+            <label>Agriculture</label>
+            <input type="number" name="agriculture" value="{{ result.agriculture }}"><br><br>
+        </div>
+
     </div>
 
-    <div class="divider"></div>
+    <br><br>
+    <button type="submit">Save Results</button>
 
-    <div class="marks">
-        <h3>Marks</h3>
-
-        <label>English</label>
-        <input type="number" name="english" value="{{ result.english }}" placeholder="English Marks (0-100)"><br><br>
-        <label>Kiswahili</label>
-        <input type="number" name="kiswahili" value="{{ result.kiswahili }}" placeholder="Kiswahili Marks (0-100)"><br><br>
-        <label>Maths</label>
-        <input type="number" name="maths" value="{{ result.maths }}" placeholder="Maths Marks (0-100)"><br><br>
-        <label>Science</label>
-        <input type="number" name="science" value="{{ result.science }}" placeholder="Science Marks (0-100)"><br><br>
-        <label>social_studies</label>
-        <input type="number" name="social_studies" value="{{ result.social_studies }}" placeholder="Social Studies Marks (0-100)"><br><br>
-        <label>C.R.E</label>
-        <input type="number" name="cre" value="{{ result.cre }}" placeholder="CRE Marks (0-100)"><br><br>
-        <label>Computer</label>
-        <input type="number" name="computer" value="{{ result.computer }}" placeholder="Computer Marks (0-100)"><br><br>
-        <label>Business</label>
-        <input type="number" name="business" value="{{ result.business }}" placeholder="Business Marks (0-100)"><br><br>
-        <label>Agriculture</label>
-        <input type="number" name="agriculture" value="{{ result.agriculture }}" placeholder="Agriculture Marks (0-100)"><br><br>
-    </div>
-
-</div>
+</form>
 
 {% endblock %}

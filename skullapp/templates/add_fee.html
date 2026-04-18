@@ -2,24 +2,48 @@
 
 {% block content %}
 
-<h1>Add Fee</h1>
+<h2>Add Fee Record</h2>
 
 <form method="POST">
     {% csrf_token %}
 
-    <label>Student</label><br>
-    <select name="student">
-        {% for student in students %}
-            <option value="{{ student.id }}">
-                {{ student.first_name }} {{ student.last_name }}
-            </option>
-        {% endfor %}
-    </select><br><br>
+    <div>
+        <label>Student</label><br>
+        <select name="student" required>
+            <option value="">-- Select Student --</option>
+            {% for student in students %}
+                <option value="{{ student.id }}">
+                    {{ student.first_name }} {{ student.last_name }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    
 
-    <input type="number" name="amount_paid" placeholder="Amount Paid"><br><br>
-    <input type="number" name="total_fee" placeholder="Total Fee"><br><br>
+    <br>
 
-    <button type="submit">Save Fee</button>
+    <div>
+        <label>Amount Paid</label><br>
+        <input type="number" name="amount_paid" placeholder="Enter amount paid" required>
+    </div>
+
+    <br>
+
+    <div>
+        <label>Total Fee</label><br>
+        <input type="number" name="total_fee" placeholder="Enter total fee" required>
+    </div>
+
+    <br>
+
+    <button type="submit">Save Fee</button><br><br><button type="submit" style="background:red; color:white;">
+        Delete Fee
+    </button>
 </form>
+
+<br>
+<a href="{% url 'fees' %}">
+    <button>Back</button>
+</a>
 
 {% endblock %}

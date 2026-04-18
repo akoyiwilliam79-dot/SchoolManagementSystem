@@ -23,9 +23,6 @@ class Student(models.Model):
 class Teacher(models.Model):
     name = models.CharField(max_length=100)
     subject = models.CharField(max_length=100)
-    subject1 = models.CharField(max_length=100)
-    subject2 = models.CharField(max_length=100)
-    subject3 = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)
 
     def __str__(self):
@@ -74,11 +71,11 @@ def delete_teacher(request, pk):
     return render(request, 'delete_teacher.html', {'teacher': teacher})
 
 
-# -----------------
-# FEES MODEL
+## -----------------
+# SIMPLE FEE MODEL (CLEAN)
 # -----------------
 class Fee(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
     total_fee = models.DecimalField(max_digits=10, decimal_places=2)
 
@@ -86,54 +83,7 @@ class Fee(models.Model):
         return self.total_fee - self.amount_paid
 
     def __str__(self):
-        return f"{self.student.first_name} - Paid: {self.amount_paid}"
-    
-def fees(request):
-    fees = Fee.objects.all()
-    return render(request, 'fees.html', {'fees': fees})
-
-def add_fee(request):
-    students = Student.objects.all()
-
-    if request.method == "POST":
-        student_id = request.POST['student']
-        amount_paid = request.POST['amount_paid']
-        total_fee = request.POST['total_fee']
-
-        Fee.objects.create(
-            student_id=student_id,
-            amount_paid=amount_paid,
-            total_fee=total_fee
-        )
-        return redirect('fees')
-
-    return render(request, 'add_fee.html', {'students': students})
-
-def edit_fee(request, pk):
-    fee = get_object_or_404(Fee, id=pk)
-    students = Student.objects.all()
-
-    if request.method == "POST":
-        fee.student_id = request.POST['student']
-        fee.amount_paid = request.POST['amount_paid']
-        fee.total_fee = request.POST['total_fee']
-        fee.save()
-
-        return redirect('fees')
-
-    return render(request, 'edit_fee.html', {
-        'fee': fee,
-        'students': students
-    })
-def delete_fee(request, pk):
-    fee = get_object_or_404(Fee, id=pk)
-
-    if request.method == "POST":
-        fee.delete()
-        return redirect('fees')
-
-    return render(request, 'delete_fee.html', {'fee': fee})
-
+        return f"{self.student.first_name} - {self.amount_paid}"
 # -----------------
 # ATTENDANCE MODEL
 # -----------------

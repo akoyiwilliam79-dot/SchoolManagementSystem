@@ -1,19 +1,79 @@
+
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
+<h1 style="text-align:center; margin-bottom:20px;">Fees Management</h1>
 
-<h1>Fees Management</h1>
+<style>
+    .fees-table {
+        width: 90%;
+        margin: auto;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        overflow: hidden;
+    }
 
-<a href="{% url 'add_fee' %}">
-    <button>Add Fee</button>
-</a>
+    .fees-table th {
+        background: #3312ef;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
 
-<table>
+    .fees-table td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .fees-table tr:hover {
+        background: #f5f5ff;
+    }
+
+    .badge {
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+        color: white;
+    }
+
+    .paid {
+        background: green;
+    }
+
+    .pending {
+        background: orange;
+    }
+
+    .btn {
+        padding: 6px 10px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        color: white;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+    .edit {
+        background: #2196F3;
+    }
+
+    .delete {
+        background: red;
+    }
+
+</style>
+
+<table class="fees-table">
     <tr>
         <th>Student</th>
         <th>Paid</th>
         <th>Total</th>
         <th>Balance</th>
+        <th>Status</th>
         <th>Actions</th>
     </tr>
 
@@ -23,15 +83,33 @@
         <td>{{ fee.amount_paid }}</td>
         <td>{{ fee.total_fee }}</td>
         <td>{{ fee.balance }}</td>
-        <td>
-            <a href="{% url 'edit_fee' fee.id %}">
-                <button>Edit</button>
-            </a>
 
-            <a href="{% url 'delete_fee' fee.id %}">
-                <button style="background:red;">Delete</button>
-            </a>
+        <td>
+            {% if fee.balance <= 0 %}
+                <span class="badge paid">PAID</span>
+            {% else %}
+                <span class="badge pending">PENDING</span>
+            {% endif %}
         </td>
+        <td>
+    <a href="{% url 'edit_fee' fee.id %}">
+        <button style="background:blue; color:white;">
+            Edit
+        </button>
+    </a>
+
+    <a href="{% url 'delete_fee' fee.id %}">
+        <button style="background:red; color:white;">
+            Delete
+        </button>
+    </a>
+</td>
+
+
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6" style="text-align:center;">No fee records found</td>
     </tr>
     {% endfor %}
 </table>

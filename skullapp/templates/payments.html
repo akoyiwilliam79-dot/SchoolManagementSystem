@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Pay Fees</h2>
+
+<form method="POST" action="{% url 'pay_fees' %}">
+    {% csrf_token %}
+
+    <label>Phone Number</label>
+    <input type="text" name="phone" placeholder="2547XXXXXXXX" required>
+
+    <label>Amount</label>
+    <input type="number" name="amount" required>
+
+    <button type="submit">Pay via M-Pesa</button>
+</form>
+
+{% endblock %}

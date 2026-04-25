@@ -12,9 +12,15 @@
     {% csrf_token %}
     <button style="background:red;">Yes Delete</button>
 </form>
-
+<br><br>
 <a href="{% url 'teachers' %}">
     <button>No Cancel</button>
 </a>
+<br>
+<br>
+<a href="{% url 'teachers' %}">
+    <button>Back</button>
+</a>
+
 
 {% endblock %}

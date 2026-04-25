@@ -61,20 +61,19 @@
 <div class="login-box">
     <h2>Login</h2>
 
-    <form method="POST">
-        {% csrf_token %}
+<form method="POST">
+    {% csrf_token %}
 
-        {% if messages %}
-            {% for message in messages %}
-                <p class="error">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
+    <input type="text" name="username" placeholder="Username" required><br><br>
+    <input type="password" name="password" placeholder="Password" required><br><br>
 
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+</form>
 
-        <button type="submit">Login</button>
-    </form>
+<p>
+    Don't have an account?
+    <a href="{% url 'register' %}">Register</a>
+</p>
 </div>
 
 </body>

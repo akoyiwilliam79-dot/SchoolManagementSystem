@@ -98,11 +98,11 @@
         </button>
     </a>
 
-    <a href="{% url 'delete_fee' fee.id %}">
-        <button style="background:red; color:white;">
-            Delete
-        </button>
-    </a>
+    <a href="{% url 'delete_fee' fee.id %}"
+   onclick="openDeleteModal({{ fee.pk }}); return false;"
+   style="background:red; color:white; padding:6px 10px; border-radius:5px; text-decoration:none;">
+   Delete
+</a>
 </td>
 
 
@@ -113,5 +113,44 @@
     </tr>
     {% endfor %}
 </table>
+<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
 
+    <div style="background:white; padding:20px; width:320px; margin:120px auto; border-radius:10px; text-align:center;">
+        
+        <h3>Delete Fee Record</h3>
+
+        <p style="color:#555;">
+            Are you sure you want to delete this fee record?<br>
+            <small style="color:red;">This action cannot be undone.</small>
+        </p>
+
+        <br>
+
+        <a id="confirmDeleteBtn" href="#">
+            <button style="background:red; color:white; padding:8px 15px; border:none; border-radius:5px;">
+                Yes, Delete
+            </button>
+        </a>
+
+        <button onclick="closeModal()" style="padding:8px 15px; margin-left:10px;">
+            Cancel
+        </button>
+
+    </div>
+</div>
+<script>
+function openDeleteModal(id) {
+    let modal = document.getElementById("deleteModal");
+    let confirmBtn = document.getElementById("confirmDeleteBtn");
+
+    // 👇 IMPORTANT: match your fee delete URL
+    confirmBtn.href = "/fees/delete/" + id + "/";
+
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("deleteModal").style.display = "none";
+}
+</script>
 {% endblock %}

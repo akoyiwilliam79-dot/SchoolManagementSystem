@@ -3,10 +3,50 @@
 {% block content %}
 
 <h1>Students & Academic Record</h1>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+ <script>
+    setTimeout(function() {
+        let alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            alert.style.transition = "opacity 0.5s ease";
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 3000);
+</script>
+<form method="GET" style="margin-bottom:15px; display:flex; gap:10px; align-items:center;">
+    
+    <input type="text"
+           name="q"
+           placeholder="Search by name, class, admission number..."
+           value="{{ query|default:'' }}"
+           style="padding:10px; width:320px; border:1px solid #ccc; border-radius:5px;">
 
+    <button type="submit"
+            style="padding:10px 15px; background:#007bff; color:white; border:none; border-radius:5px;">
+        Search
+    </button>
+
+    <a href="{% url 'students' %}">
+        <button type="button"
+                style="padding:10px 15px; background:#04080c; color:white; border:none; border-radius:5px;">
+            Reset
+        </button>
+    </a>
+    
+
+</form>
 <table>
-    <tr style="background-color: {% if item.color %}{{ item.color }}20{% endif %};">
+    <tr>
         <th>Name</th>
+        <th>Class</th>
+        <th>Admission No</th>
         <th>English</th>
         <th>Kiswahili</th>
         <th>Maths</th>
@@ -17,13 +57,23 @@
         <th>Business</th>
         <th>Agriculture</th>
         <th>Total</th>
+        <th>Actions</th>
     </tr>
 
     {% for item in student_data %}
     <tr style="background-color: {% if item.color %}{{ item.color }}20{% endif %};">
+
         <td>
             {{ item.student.first_name }} {{ item.student.last_name }}
         </td>
+          <!-- CLASS COLUMN -->
+    <td>
+        {{ item.student.student_class }}
+    </td>
+     <!-- ADMISSION NUMBER -->
+    <td>
+        {{ item.student.admission_number }}
+    </td>
 
         <td>{{ item.result.english|default:"-" }}</td>
         <td>{{ item.result.kiswahili|default:"-" }}</td>
@@ -36,16 +86,81 @@
         <td>{{ item.result.agriculture|default:"-" }}</td>
 
         <td>
-    {% if item.result %}
-        <b style="color: {{ item.color }};">
-            {{ item.result.total }} ({{ item.grade }})
-        </b>
-    {% else %}
-        -
-    {% endif %}
-</td>
+            {% if item.result %}
+                <b style="color: {{ item.color }};">
+                    {{ item.result.total }} ({{ item.grade }})
+                </b>
+            {% else %}
+                -
+            {% endif %}
+        </td>
+
+        <!-- ACTIONS COLUMN -->
+        <td>
+
+            <!-- EDIT BUTTON -->
+            <a href="{% url 'edit_student' item.student.pk %}">
+                <button style="background:#007bff; color:white; border:none; padding:6px 10px; border-radius:5px;">
+                    Edit
+                </button>
+            </a>
+
+            <br><br>
+
+            <!-- DELETE BUTTON -->
+            <a href="{% url 'delete_student' item.student.pk %}"
+   onclick="openDeleteModal({{ item.student.pk }}, '{{ item.student.first_name }} {{ item.student.last_name }}'); return false;"
+   style="background:red; color:white; padding:6px 10px; border-radius:5px; text-decoration:none;">
+   Delete
+</a>
+        </td><br>
+
     </tr>
     {% endfor %}
 </table>
+<br>
+<a href="{% url 'students' %}">
+    <button>Back</button>
+</a>
+<script>
+function openDeleteModal(id, name) {
+    let modal = document.getElementById("deleteModal");
+    let confirmBtn = document.getElementById("confirmDeleteBtn");
+    let message = document.getElementById("deleteMessage");
 
+    // dynamic message 👇
+    message.innerHTML = "Are you sure you want to delete <b>" + name + "</b>?<br><small style='color:red;'>This action cannot be undone.</small>";
+
+    // 👇 match your student delete URL
+    confirmBtn.href = "/students/delete/" + id + "/";
+
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("deleteModal").style.display = "none";
+}
+</script>
+<div id="deleteModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
+
+    <div style="background:white; padding:20px; width:320px; margin:120px auto; border-radius:10px; text-align:center;">
+        
+        <h3>Delete Student</h3>
+
+        <p id="deleteMessage" style="color:#555;"></p>
+
+        <br>
+
+        <a id="confirmDeleteBtn" href="#">
+            <button style="background:red; color:white; padding:8px 15px; border:none; border-radius:5px;">
+                Yes, Delete
+            </button>
+        </a>
+
+        <button onclick="closeModal()" style="padding:8px 15px; margin-left:10px;">
+            Cancel
+        </button>
+
+    </div>
+</div>
 {% endblock %}

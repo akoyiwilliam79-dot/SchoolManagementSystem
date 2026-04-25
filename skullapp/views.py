@@ -19,10 +19,11 @@ from datetime import datetime
 from django.conf import settings
 from django.shortcuts import redirect
 from .models import Fee
-
-
-
-
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import HttpResponseForbidden
+from django.contrib.auth.models import User
+from .models import Attendance
+from decimal import Decimal
 
 
 
@@ -49,10 +50,25 @@ def dashboard(request):
 
     return render(request, 'dashboard.html', context)
 
+@login_required
+def students(request):
+    return render(request, 'students.html')
 
+from django.db.models import Q
 
 def students(request):
+    query = request.GET.get('q')
+
     students = Student.objects.all()
+
+    if query:
+        students = students.filter(
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query) |
+            Q(student_class__icontains=query) |
+            Q(admission_number__icontains=query)
+        )
+
     results = Result.objects.all()
 
     student_data = []
@@ -74,9 +90,9 @@ def students(request):
         })
 
     return render(request, 'students.html', {
-        'student_data': student_data
+        'student_data': student_data,
+        'query': query
     })
-
 
 #grade function
 def get_grade(total):
@@ -199,6 +215,15 @@ def add_student(request):
 
 #User role
 
+
+def admin_only(user):
+    return user.is_staff
+
+@login_required
+@user_passes_test(admin_only)
+def fees(request):
+    ...
+
 def user_role(user):
     if user.groups.filter(name='Admin').exists():
         return 'admin'
@@ -240,15 +265,36 @@ def user_login(request):
 
         user = authenticate(request, username=username, password=password)
 
-        if user:
+        if user is not None:
             login(request, user)
-            return redirect('dashboard')  # or dashboard
-        else:
-            messages.error(request, "Invalid username or password")
+
+            if user.is_staff:
+                return redirect('dashboard')
+            else:
+                return redirect('students')
+
+        messages.error(request, "Invalid username or password")
 
     return render(request, 'login.html')
 
+def register(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already exists!")
+            return redirect('register')
+
+        User.objects.create_user(
+            username=username,
+            password=password
+        )
+
+        messages.success(request, "Account created successfully. Please login.")
+        return redirect('login')
+
+    return render(request, 'register.html')
 def user_logout(request):
     logout(request)
     return redirect('login')
@@ -268,8 +314,8 @@ def add_fee(request):
     if request.method == "POST":
         Fee.objects.create(
             student_id=request.POST['student'],
-            amount_paid=request.POST['amount_paid'],
-            total_fee=request.POST['total_fee']
+            amount_paid = int(request.POST.get('amount_paid') or 0),
+            total_fee = int(request.POST.get('total_fee') or 0),
         )
         return redirect('fees')
 
@@ -282,12 +328,13 @@ def edit_fee(request, pk):
 
     if request.method == "POST":
         fee.student_id = request.POST['student']
-        fee.amount_paid = request.POST['amount_paid']
-        fee.total_fee = request.POST['total_fee']
+        fee.amount_paid = (request.POST.get('amount_paid') or 0)
+        fee.total_fee = (request.POST.get('total_fee') or 0)
         fee.save()
         return redirect('fees')
 
     return render(request, 'edit_fee.html', {'fee': fee, 'students': students})
+
 
 
 def delete_fee(request, pk):
@@ -323,3 +370,49 @@ def edit_result(request, pk):
         'result': result
     })
 
+def add_results(request):
+    if request.method == "POST":
+        # your logic to save results here
+
+        messages.success(request, "Results entered successfully!")
+        messages.info(request, "Student records updated successfully!")
+
+        return redirect('add_results')  # or wherever you want
+
+    return render(request, 'add_results.html')
+
+def delete_result(request, pk):
+    result = Result.objects.get(id=pk)
+    result.delete()
+
+    messages.warning(request, "Result deleted successfully!")
+    return redirect('results')
+
+
+def delete_student(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    student.delete()
+
+    messages.success(request, "Student deleted successfully!")
+    return redirect('students')
+
+
+def edit_attendance(request, pk):
+    attendance = get_object_or_404(Attendance, pk=pk)
+
+    if request.method == "POST":
+        attendance.status = request.POST.get('status')
+        attendance.date = request.POST.get('date')
+        attendance.save()
+
+        messages.success(request, "Attendance updated successfully!")
+        return redirect('attendance')
+
+    return render(request, 'edit_attendance.html', {'attendance': attendance})
+
+def delete_attendance(request, pk):
+    attendance = get_object_or_404(Attendance, pk=pk)
+    attendance.delete()
+
+    messages.success(request, "Attendance deleted successfully!")
+    return redirect('attendance')

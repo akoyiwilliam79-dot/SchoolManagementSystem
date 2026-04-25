@@ -13,25 +13,48 @@
     
 
 <div class="sidebar">
-    <h2>ALL SAINTS LWENYA PRIMARY SCHOOL</h2>
+    <h2>ALL SAINTS LWENYA PRIMARY AND JUNIOR SECONDARY SCHOOL</h2>
     <ul>
-        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        
         <li><a href="{% url 'students' %}">Students</a></li>
-        <li><a href="{% url 'add_student' %}">
+       
+
+
+        <li><a href="{% url 'teachers' %}">Teachers</a></li>
+        
+
+        <li><a href="{% url 'results' %}">Results</a></li>
+        
+
+        {% if user.groups.all.0.name == "Admin" %}
+        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+    <li><a href="/fees/">Fees</a></li>
+    <li><a href="{% url 'attendance' %}">Attendance</a></li>
+     <li><a href="{% url 'add_fee' %}">
+            <button>Add Fees</button>
+        </a></li>
+        
+        <li><a href="{% url 'add_result' %}">
+             <button>Add Result</button>
+        </a></li>
+        
+         <li><a href="{% url 'add_teacher' %}">
+             <button>Add Teacher</button>
+        </a></li>
+         <li><a href="{% url 'add_student' %}">
     <button>Add Student</button>
 </a></li>
-        <li><a href="{% url 'teachers' %}">Teachers</a></li>
-        {% if user.groups.all.0.name == "Admin" %}
-    <li><a href="/fees/">Fees</a></li>
+        
 {% endif %}
-        <li><a href="{% url 'attendance' %}">Attendance</a></li>
-        <li><a href="{% url 'results' %}">Results</a></li>
-        <li><a href="{% url 'add_teacher' %}">Add Teacher</a></li>
-        <li><a href="{% url 'fees' %}">Fees</a></li>
-        <li><a href="{% url 'add_fee' %}">Add Fee</a></li>
+
+
+        
+        
+        
         <li><a href="{% url 'logout' %}">Logout</a></li>
     </ul>
 </div>
+
 
     <div class="content">
         {% block content %}
@@ -44,5 +67,6 @@ function toggleDarkMode() {
     document.body.classList.toggle("dark");
 }
 </script>
+
 </body>
 </html>

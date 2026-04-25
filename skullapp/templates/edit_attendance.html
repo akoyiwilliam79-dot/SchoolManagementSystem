@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Edit Attendance</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Student</label><br>
+    <input type="text" value="{{ attendance.student.first_name }} {{ attendance.student.last_name }}" disabled>
+
+    <br><br>
+
+    <label>Date</label><br>
+    <input type="date" name="date" value="{{ attendance.date|date:'Y-m-d' }}" required>
+
+    <br><br>
+
+    <label>Status</label><br>
+    <select name="status">
+        <option value="Present" {% if attendance.status == "Present" %}selected{% endif %}>Present</option>
+        <option value="Absent" {% if attendance.status == "Absent" %}selected{% endif %}>Absent</option>
+    </select>
+
+    <br><br>
+
+    <button type="submit">Update Attendance</button>
+
+</form>
+
+<br>
+
+<a href="{% url 'attendance' %}">
+    <button>Back</button>
+</a>
+
+{% endblock %}

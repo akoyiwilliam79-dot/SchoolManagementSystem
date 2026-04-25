@@ -8,6 +8,7 @@
     {% csrf_token %}
 
     <select name="student">
+        
         {% for student in students %}
             <option value="{{ student.id }}">
                 {{ student.first_name }} {{ student.last_name }}
@@ -16,16 +17,21 @@
     </select><br><br>
 
     <input type="number" name="english" placeholder="English"><br><br>
-    <input type="number" name="kiswahili"><br><br>
-    <input type="number" name="maths"><br><br>
-    <input type="number" name="science"><br><br>
-    <input type="number" name="social_studies"><br><br>
-    <input type="number" name="cre"><br><br>
-    <input type="number" name="computer"><br><br>
-    <input type="number" name="business"><br><br>
-    <input type="number" name="agriculture"><br><br>
+    <input type="number" name="kiswahili"  placeholder="Kiswahili"><br><br>
+    <input type="number" name="maths"  placeholder="Maths"><br><br>
+    <input type="number" name="science"  placeholder="Science"><br><br>
+    <input type="number" name="social_studies"  placeholder="social_studies"><br><br>
+    <input type="number" name="cre"  placeholder="C.R.E"><br><br>
+    <input type="number" name="computer"  placeholder="Computer"><br><br>
+    <input type="number" name="business"  placeholder="Business"><br><br>
+    <input type="number" name="agriculture"  placeholder="Agriculture"><br><br>
 
     <button type="submit">Save Result</button>
 </form>
+
+<br>
+<a href="{% url 'results' %}">
+    <button>Back</button>
+</a>
 
 {% endblock %}

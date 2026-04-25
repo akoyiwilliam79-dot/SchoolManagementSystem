@@ -31,7 +31,7 @@ class Teacher(models.Model):
 
 def teachers(request):
     teachers = Teacher.objects.all()
-    return render(request, 'skullapp/teachers.html', {'teachers': teachers})
+    return render(request, 'teachers.html', {'teachers': teachers})
 
 
 def add_teacher(request):
@@ -76,9 +76,9 @@ def delete_teacher(request, pk):
 # -----------------
 class Fee(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
-    total_fee = models.DecimalField(max_digits=10, decimal_places=2)
-
+    amount_paid = models.IntegerField(default=0)
+    total_fee = models.IntegerField(default=0)
+    @property
     def balance(self):
         return self.total_fee - self.amount_paid
 

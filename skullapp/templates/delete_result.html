@@ -3,6 +3,26 @@
 {% block content %}
 
 <h1>Delete Result</h1>
+{% if messages %}
+    <div class="message-container">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">
+                <span>{{ message }}</span>
+                <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<script>
+    setTimeout(function() {
+        let alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            alert.style.transition = "opacity 0.5s ease";
+            alert.style.opacity = "0";
+            setTimeout(() => alert.remove(), 500);
+        });
+    }, 3000);
+</script>
 
 <p>Are you sure you want to delete this result?</p>
 
@@ -21,6 +41,11 @@
 
 <a href="{% url 'results' %}">
     <button>No Cancel</button>
+</a>
+<br>
+<br>
+<a href="{% url 'results' %}">
+    <button>Back</button>
 </a>
 
 {% endblock %}
